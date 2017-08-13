@@ -2,6 +2,7 @@
     "name": "multi-hashing",
     "version": "0.0.9",
     "main": "multihashing",
+    "gypfile": true,
     "author": {
         "name": "Matthew Little",
         "email": "zone117x@gmail.com"
@@ -10,8 +11,12 @@
         "type": "git",
         "url": "https://github.com/zone117x/node-multi-hashing.git"
     },
-    "dependencies" : {
-        "bindings" : "*"
+    "scripts": {
+      "test": "node-gyp clean && node-gyp configure && node-gyp build"
+    },
+    "dependencies": {
+        "bindings": "*",
+        "nan": "^2.6.2"
     },
     "keywords": [
         "scrypt",

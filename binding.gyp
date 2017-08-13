@@ -3,7 +3,7 @@
         {
             "target_name": "multihashing",
             "sources": [
-                "multihashing.cc",
+                "multihashing.cpp",
                 "scryptjane.c",
                 "scryptn.c",
                 "keccak.c",
@@ -53,6 +53,7 @@
             ],
             "include_dirs": [
                 "crypto",
+                "<!(node -e \"require('nan')\")"
             ],
             "cflags_cc": [
                 "-std=c++0x"
