@@ -12,7 +12,7 @@
         "url": "https://github.com/zone117x/node-multi-hashing.git"
     },
     "scripts": {
-      "test": "node-gyp clean && node-gyp configure && node-gyp build"
+        "test": "node-gyp clean && node-gyp configure && node-gyp build"
     },
     "dependencies": {
         "bindings": "*",
