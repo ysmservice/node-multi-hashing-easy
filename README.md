@@ -1,7 +1,7 @@
 node-multi-hashing
 ===============
 
-[![Build Status](https://travis-ci.org/codebling/node-multi-hashing.png?branch=windows-compatibility)](https://travis-ci.org/codebling/node-multi-hashing)
+[![Travis build status](https://travis-ci.org/codebling/node-multi-hashing.png?branch=windows-compatibility)](https://travis-ci.org/codebling/node-multi-hashing) [![Appveyor build status](https://ci.appveyor.com/api/projects/status/xixm3n1fprcyr96y/branch/windows-compatibility)](https://ci.appveyor.com/project/codebling/node-multi-hashing/branch/windows-compatibility)
 
 [![NPM](https://nodei.co/npm/multi-hashing.png?downloads=true&stars=true)](https://nodei.co/npm/multi-hashing/)
 
