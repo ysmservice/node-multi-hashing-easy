@@ -32,10 +32,12 @@ Algorithms
 Usage
 -----
 
-Install
+Install on Ubuntu 16.04
 
 ```bash
-npm install multi-hashing
+sudo apt-get nodejs nodejs-dev node-gyp npm
+sudo ln -s /usr/bin/nodejs /usr/bin/node
+npm install git+https://github.com/sumlnoether/node-multi-hashing-node8.git
 ```
 
 So far this native Node.js addon can do the following hashing algos
