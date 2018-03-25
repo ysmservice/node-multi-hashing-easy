@@ -79,3 +79,5 @@ Credits
 * [bcrypt](http://en.wikipedia.org/wiki/Bcrypt) - Niels Provos and David Mazières
 * [X11](http://www.darkcoin.io/), [Hefty1](http://heavycoin.github.io/about.html), [Quark](http://www.qrk.cc/) creators (they just mixed together a bunch of the above algos)
 * [PhearZero](https://github.com/PhearZero) Michael J Feher
+* [codebling](https://github.com/codebling) CodeBling
+* [Monero](https://github.com/monero-project/monero) The Monero Project
