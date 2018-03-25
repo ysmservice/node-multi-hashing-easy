@@ -21,7 +21,7 @@ extern "C" {
     #include "cryptonight.h"
     #include "x13.h"
     #include "nist5.h"
-    #include "sha1.h",
+    #include "sha1.h"
     #include "x15.h"
 	#include "fresh.h"
 }
