@@ -1,15 +1,15 @@
-node-multi-hashing
-===============
+# turtlecoin-multi-hashing
 
-[![Travis build status](https://travis-ci.org/codebling/node-multi-hashing-windows.png?branch=windows-compatibility)](https://travis-ci.org/codebling/node-multi-hashing-windows) [![Appveyor build status](https://ci.appveyor.com/api/projects/status/xixm3n1fprcyr96y/branch/windows-compatibility)](https://ci.appveyor.com/project/codebling/node-multi-hashing/branch/windows-compatibility)
+[![Build Status](https://travis-ci.org/brandonlehmann/node8-multi-hashing.png?branch=master)](https://travis-ci.org/brandonlehmann/node8-multi-hashing) [![Build Status](https://ci.appveyor.com/api/projects/status/github/brandonlehmann/node8-multi-hashing?branch=master&svg=true)](https://ci.appveyor.com/project/brandonlehmann/node8-multi-hashing/branch/master)
 
-[![NPM](https://nodei.co/npm/multi-hashing.png?downloads=true&stars=true)](https://nodei.co/npm/multi-hashing/)
+[![NPM](https://nodei.co/npm/turtlecoin-multi-hashing.png?downloads=true&stars=true)](https://nodei.co/npm/turtlecoin-multi-hashing/)
 
-Cryptocurrency hashing functions for node.js.
+Cryptocurrency hashing functions for NodeJS
 
+***Now with Windows support***
 
-Algorithms
-----------
+## Algorithms
+
 * quark
 * x11
 * x13
@@ -27,49 +27,48 @@ Algorithms
 * hefty1
 * shavite3
 * cryptonight
+* cryptonight-fast
+* cryptonight-lite
 * boolberry
 
-Usage
------
+## Usage
 
-Install on Ubuntu 16.04
+### Install
 
 ```bash
 sudo apt-get nodejs nodejs-dev node-gyp npm
 sudo ln -s /usr/bin/nodejs /usr/bin/node
-npm install git+https://github.com/sumlnoether/node-multi-hashing-node8.git
+npm install turtlecoin-multi-hashing
 ```
 
-So far this native Node.js addon can do the following hashing algos
+So far this native NodeJS addon can do the following hashing algorithms.
 
 ```javascript
-var multiHashing = require('multi-hashing');
+var multiHashing = require('turtlecoin-multi-hashing')
+var Buffer = require('safe-buffer').Buffer
 
-var algorithms = ['quark', 'x11', 'scrypt', 'scryptn', 'scryptjane', 'keccak', 'bcrypt', 'skein', 'blake'];
+var algorithms = ['quark', 'x11', 'scrypt', 'scryptn', 'scryptjane', 'keccak', 'bcrypt', 'skein', 'blake']
 
-var data = new Buffer("7000000001e980924e4e1109230383e66d62945ff8e749903bea4336755c00000000000051928aff1b4d72416173a8c3948159a09a73ac3bb556aa6bfbcad1a85da7f4c1d13350531e24031b939b9e2b", "hex");
+var data = new Buffer('7000000001e980924e4e1109230383e66d62945ff8e749903bea4336755c00000000000051928aff1b4d72416173a8c3948159a09a73ac3bb556aa6bfbcad1a85da7f4c1d13350531e24031b939b9e2b', 'hex')
 
-var hashedData = algorithms.map(function(algo){
-    if (algo === 'scryptjane'){
-        //scryptjane needs block.nTime and nChainStartTime (found in coin source)
-        var yaCoinChainStartTime = 1367991200;
-        var nTime = Math.round(Date.now() / 1000);
-        return multiHashing[algo](data, nTime, yaCoinChainStartTime);
-    }
-    else{
-        return multiHashing[algo](data);
-    }
-});
+var hashedData = algorithms.map(function (algo) {
+  if (algo === 'scryptjane') {
+        // scryptjane needs block.nTime and nChainStartTime (found in coin source)
+    var yaCoinChainStartTime = 1367991200
+    var nTime = Math.round(Date.now() / 1000)
+    return multiHashing[algo](data, nTime, yaCoinChainStartTime)
+  } else {
+    return multiHashing[algo](data)
+  }
+})
 
-
-console.log(hashedData);
+console.log(hashedData)
 //<SlowBuffer 0b de 16 ef 2d 92 e4 35 65 c6 6c d8 92 d9 66 b4 3d 65 ..... >
-
-
 ```
 
-Credits
--------
+
+## Credits
+
 * [NSA](http://www.nsa.gov/) and [NIST](http://www.nist.gov/) for creation or sponsoring creation of SHA2 and SHA3 algos
 * [Keccak](http://en.wikipedia.org/wiki/Keccak) - Guido Bertoni, Joan Daemen, Michaël Peeters, and Gilles Van Assche
 * [Skein](http://en.wikipedia.org/wiki/Skein_(hash_function)) - Bruce Schneier, Stefan Lucks, Niels Ferguson, Doug Whiting, Mihir Bellare, Tadayoshi Kohno, Jon Callas and Jesse Walker.
@@ -83,3 +82,4 @@ Credits
 * [PhearZero](https://github.com/PhearZero) Michael J Feher
 * [codebling](https://github.com/codebling) CodeBling
 * [Monero](https://github.com/monero-project/monero) The Monero Project
+* [TurtleCoin](https://github.com/turtlecoin) TurtleCoin Developers

@@ -3,27 +3,30 @@
         {
             "target_name": "multihashing",
             "sources": [
-                "multihashing.cpp",
+                "multihashing.cc",
+                "bcrypt.c",
+                "blake.c",
+                "boolberry.cc",
+                "c11.c",
+                "cryptonight.c",
+                "cryptonight_fast.c",
+                "cryptonight_lite.c",
+                "fresh.c",
+                "fugue.c",
+                "groestl.c",
+                "hefty1.c",
+                "keccak.c",
+                "nist5.c",
+                "quark.c",
+                "qubit.c",
                 "scryptjane.c",
                 "scryptn.c",
-                "keccak.c",
+                "sha1.c",
+                "shavite3.c",
                 "skein.c",
                 "x11.c",
-                "quark.c",
-                "bcrypt.c",
-                "groestl.c",
-                "blake.c",
-                "fugue.c",
-                "qubit.c",
-                "hefty1.c",
-                "shavite3.c",
-                "cryptonight.c",
                 "x13.c",
-                "boolberry.cc",
-                "nist5.c",
-                "sha1.c",
                 "x15.c",
-                "fresh.c",
                 "sha3/sph_hefty1.c",
                 "sha3/sph_fugue.c",
                 "sha3/aes_helper.c",
@@ -53,11 +56,26 @@
             ],
             "include_dirs": [
                 "crypto",
-                "<!(node -e \"require('nan')\")"
             ],
             "cflags_cc": [
-                "-std=c++0x"
+                "-std=c++0x",
+                "-Wno-missing-field-initializers",
+                "-Wno-unused-function",
+                "-Wno-unused-const-variable",
+                "-Wno-unused-private-field",
+                "-Wno-unused-function",
+                "-Wno-unused-but-set-variable"
             ],
+            "xcode_settings": {
+                "OTHER_CFLAGS": [
+                  "-Wno-missing-field-initializers",
+                  "-Wno-unused-function",
+                  "-Wno-unused-const-variable",
+                  "-Wno-unused-private-field",
+                  "-Wno-unused-function",
+                  "-Wno-unused-but-set-variable"
+                ],
+            }
         }
     ]
 }
