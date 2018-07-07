@@ -217,7 +217,7 @@ unsigned char GetNfactorJane(int nTimestamp, int nChainStartTime, int nMin, int 
 
 void scryptjane_hash(const void* input, size_t inputlen, uint32_t *res, unsigned char Nfactor)
 {
-    return scrypt((const unsigned char*)input, inputlen,
+    scrypt((const unsigned char*)input, inputlen,
                   (const unsigned char*)input, inputlen,
                    Nfactor, 0, 0, (unsigned char*)res, 32);
 }
