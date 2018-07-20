@@ -2,6 +2,7 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 // Portions Copyright (c) 2018 The Monero developers
+// Portions Copyright (c) 2018 The TurtleCoin Developers
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,12 +19,15 @@
 #include <malloc.h>  
 #endif
 
-#define MEMORY         (1 << 20) /* 2 MiB */
-#define ITER           (1 << 19)
+#define MEMORY          1048576 /* 1 MiB - 2^20 */
+#define ITER            524288 /* 2^19 */
+#define ITER_DIV        262144 /* 2^18 */
 #define AES_BLOCK_SIZE  16
 #define AES_KEY_SIZE    32 /*16*/
 #define INIT_SIZE_BLK   8
-#define INIT_SIZE_BYTE (INIT_SIZE_BLK * AES_BLOCK_SIZE)
+#define INIT_SIZE_BYTE  (INIT_SIZE_BLK * AES_BLOCK_SIZE)
+#define CN_INIT         (MEMORY / INIT_SIZE_BYTE)
+#define CN_AES_INIT     (MEMORY / AES_BLOCK_SIZE)
 
 #define VARIANT1_1(p) \
   do if (variant > 0) \
@@ -84,7 +88,7 @@ extern int aesb_single_round(const uint8_t *in, uint8_t*out, const uint8_t *expa
 extern int aesb_pseudo_round(const uint8_t *in, uint8_t *out, const uint8_t *expandedKey);
 
 static inline size_t e2i(const uint8_t* a) {
-    return (*((uint64_t*) a) / AES_BLOCK_SIZE) & (MEMORY / AES_BLOCK_SIZE - 1);
+    return (*((uint64_t*) a) / AES_BLOCK_SIZE) & (CN_AES_INIT - 1);
 }
 
 static void mul(const uint8_t* a, const uint8_t* b, uint8_t* res) {
@@ -165,7 +169,7 @@ void cryptonightlite_hash(const char* input, char* output, uint32_t len, int var
     VARIANT1_INIT();
 
     oaes_key_import_data(ctx->aes_ctx, ctx->aes_key, AES_KEY_SIZE);
-    for (i = 0; i < MEMORY / INIT_SIZE_BYTE; i++) {
+    for (i = 0; i < CN_INIT; i++) {
         for (j = 0; j < INIT_SIZE_BLK; j++) {
             aesb_pseudo_round(&ctx->text[AES_BLOCK_SIZE * j],
                     &ctx->text[AES_BLOCK_SIZE * j],
@@ -179,7 +183,7 @@ void cryptonightlite_hash(const char* input, char* output, uint32_t len, int var
         ctx->b[i] = ctx->state.k[16 + i] ^ ctx->state.k[48 + i];
     }
 
-    for (i = 0; i < ITER / 2; i++) {
+    for (i = 0; i < ITER_DIV; i++) {
         /* Dependency chain: address -> read value ------+
          * written value <-+ hard function (AES or MUL) <+
          * next address  <-+
@@ -199,7 +203,7 @@ void cryptonightlite_hash(const char* input, char* output, uint32_t len, int var
 
     memcpy(ctx->text, ctx->state.init, INIT_SIZE_BYTE);
     oaes_key_import_data(ctx->aes_ctx, &ctx->state.hs.b[32], AES_KEY_SIZE);
-    for (i = 0; i < MEMORY / INIT_SIZE_BYTE; i++) {
+    for (i = 0; i < CN_INIT; i++) {
         for (j = 0; j < INIT_SIZE_BLK; j++) {
             xor_blocks(&ctx->text[j * AES_BLOCK_SIZE],
                     &ctx->long_state[i * INIT_SIZE_BYTE + j * AES_BLOCK_SIZE]);
