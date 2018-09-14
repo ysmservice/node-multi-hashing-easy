@@ -1,8 +1,14 @@
-# turtlecoin-multi-hashing
+![image](https://user-images.githubusercontent.com/34389545/35821974-62e0e25c-0a70-11e8-87dd-2cfffeb6ed47.png)
 
-[![Build Status](https://travis-ci.org/brandonlehmann/node8-multi-hashing.png?branch=master)](https://travis-ci.org/brandonlehmann/node8-multi-hashing) [![Build Status](https://ci.appveyor.com/api/projects/status/github/brandonlehmann/node8-multi-hashing?branch=master&svg=true)](https://ci.appveyor.com/project/brandonlehmann/node8-multi-hashing/branch/master)
+#### Master Build Status
+[![Build Status](https://travis-ci.org/turtlecoin/node8-multi-hashing.svg?branch=master)](https://travis-ci.org/node8-multi-hashing/turtlecoin) [![Build Status](https://ci.appveyor.com/api/projects/status/github/brandonlehmann/node8-multi-hashing?branch=master&svg=true)](https://ci.appveyor.com/project/brandonlehmann/node8-multi-hashing/branch/master)
+
+#### Development Build Status
+[![Build Status](https://travis-ci.org/turtlecoin/node8-multi-hashing.svg?branch=development)](https://travis-ci.org/node8-multi-hashing/turtlecoin) [![Build Status](https://ci.appveyor.com/api/projects/status/github/brandonlehmann/node8-multi-hashing?branch=development&svg=true)](https://ci.appveyor.com/project/brandonlehmann/node8-multi-hashing/branch/development)
 
 [![NPM](https://nodei.co/npm/turtlecoin-multi-hashing.png?downloads=true&stars=true)](https://nodei.co/npm/turtlecoin-multi-hashing/)
+
+# TurtleCoin-multi-hashing
 
 Cryptocurrency hashing functions for NodeJS
 
