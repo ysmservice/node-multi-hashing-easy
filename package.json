@@ -16,7 +16,7 @@
         "url": "https://github.com/turtlecoin/node8-multi-hashing.git"
     },
     "scripts": {
-        "test": "node-gyp clean && node-gyp configure && node-gyp build"
+        "test": "node-gyp clean && node-gyp configure && node-gyp build && node tests/cryptonight-tests.js"
     },
     "dependencies": {
         "bindings": "*",
