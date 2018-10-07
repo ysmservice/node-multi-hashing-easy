@@ -25,7 +25,7 @@
 #define INIT_SIZE_BLK          8
 #define INIT_SIZE_BYTE         (INIT_SIZE_BLK * AES_BLOCK_SIZE)
 
-#define MEMORY                 4194304
+#define MEMORY                 2097152
 
 #define VARIANT1_1(p) \
   do if (variant > 0) \
