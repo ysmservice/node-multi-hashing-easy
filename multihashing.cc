@@ -7,10 +7,14 @@
 #define CN_SOFT_SHELL_MEMORY            262144 // 256K scratchpad 2^18
 #define CN_SOFT_SHELL_ITER              131072 // 2^17
 #define CN_SOFT_SHELL_WINDOW            2048 // This defines how many blocks we cycle through as part of our algo sine wave
-#define CN_SOFT_SHELL_MULTIPLIER        2 // This defines how big our steps are for each block and
+#define CN_SOFT_SHELL_MULTIPLIER        3 // This defines how big our steps are for each block and
                                           // ultimately determines how big our sine wave is. A smaller value means a bigger wave
 #define CN_SOFT_SHELL_PAD_MULTIPLIER    (CN_SOFT_SHELL_WINDOW / CN_SOFT_SHELL_MULTIPLIER)
 #define CN_SOFT_SHELL_ITER_MULTIPLIER   (CN_SOFT_SHELL_PAD_MULTIPLIER / 2) // This value should always be half of our pad multiplier
+
+#if (((CN_SOFT_SHELL_WINDOW * CN_SOFT_SHELL_PAD_MULTIPLIER) + CN_SOFT_SHELL_MEMORY) > 2097152)
+#error The CryptoNight Soft Shell Parameters you supplied will exceed normal paging operations.
+#endif
 
 extern "C" {
     #include "bcrypt.h"
