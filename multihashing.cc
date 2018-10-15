@@ -3,19 +3,6 @@
 #include <v8.h>
 #include <stdint.h>
 
-// CryptoNight Soft Shell Definitions
-#define CN_SOFT_SHELL_MEMORY            262144 // 256K scratchpad 2^18
-#define CN_SOFT_SHELL_ITER              131072 // 2^17
-#define CN_SOFT_SHELL_WINDOW            2048 // This defines how many blocks we cycle through as part of our algo sine wave
-#define CN_SOFT_SHELL_MULTIPLIER        3 // This defines how big our steps are for each block and
-                                          // ultimately determines how big our sine wave is. A smaller value means a bigger wave
-#define CN_SOFT_SHELL_PAD_MULTIPLIER    (CN_SOFT_SHELL_WINDOW / CN_SOFT_SHELL_MULTIPLIER)
-#define CN_SOFT_SHELL_ITER_MULTIPLIER   (CN_SOFT_SHELL_PAD_MULTIPLIER / 2) // This value should always be half of our pad multiplier
-
-#if (((CN_SOFT_SHELL_WINDOW * CN_SOFT_SHELL_PAD_MULTIPLIER) + CN_SOFT_SHELL_MEMORY) > 2097152)
-#error The CryptoNight Soft Shell Parameters you supplied will exceed normal paging operations.
-#endif
-
 extern "C" {
     #include "bcrypt.h"
     #include "blake.h"
@@ -23,7 +10,6 @@ extern "C" {
     #include "cryptonight.h"
     #include "cryptonight_fast.h"
     #include "cryptonight_lite.h"
-    #include "cryptonight_soft_shell.h"
     #include "fresh.h"
     #include "fugue.h"
     #include "groestl.h"
@@ -327,58 +313,6 @@ DECLARE_FUNC(cryptonightfast) {
     SET_BUFFER_RETURN(output, 32);
 }
 
-DECLARE_FUNC(cryptonightsoftshell) {
-    DECLARE_SCOPE;
-    
-    bool fast = false;
-    uint32_t cn_variant = 0;
-    uint32_t height = 0;
-    
-    if (args.Length() < 1)
-      RETURN_EXCEPT("You must provide one argument.");
-    
-    if (args.Length() >= 2) {
-        if(args[1]->IsBoolean())
-            fast = args[1]->BooleanValue();
-        else if(args[1]->IsUint32())
-            cn_variant = args[1]->Uint32Value();
-        else
-            RETURN_EXCEPT("Argument 2 should be a boolean or uint32_t");
-    }
-    
-    if (args.Length() >= 3) {
-      if (args[2]->IsUint32())
-        height = args[2]->Uint32Value();
-      else
-        RETURN_EXCEPT("Argument 3 should be an uint32_t");
-    }
-   
-    Local<Object> target = args[0]->ToObject();
-    
-    uint32_t base_offset = (height % CN_SOFT_SHELL_WINDOW);
-    int32_t offset = (height % (CN_SOFT_SHELL_WINDOW * 2)) - (base_offset * 2);
-    if (offset < 0) {
-      offset = base_offset;
-    }
-
-    uint32_t scratchpad = CN_SOFT_SHELL_MEMORY + (static_cast<uint32_t>(offset) * CN_SOFT_SHELL_PAD_MULTIPLIER);
-    uint32_t iterations = CN_SOFT_SHELL_ITER + (static_cast<uint32_t>(offset) * CN_SOFT_SHELL_ITER_MULTIPLIER);
-    
-    char * input = Buffer::Data(target);
-    char output[32];
-
-    uint32_t input_len = Buffer::Length(target);
-
-    if(fast)
-        cryptonight_soft_shell_fast_hash(input, output, input_len);
-    else {
-        if (cn_variant > 0 && input_len < 43)
-            RETURN_EXCEPT("Argument must be 43 bytes for monero variant 1+");
-        cryptonight_soft_shell_hash(input, output, input_len, cn_variant, scratchpad, iterations);
-    }
-    SET_BUFFER_RETURN(output, 32);
-}
-
 DECLARE_FUNC(boolberry) {
     DECLARE_SCOPE;
 
@@ -424,7 +358,6 @@ DECLARE_INIT(init) {
     NODE_SET_METHOD(exports, "cryptonight-fast", cryptonightfast);
     NODE_SET_METHOD(exports, "cryptonightlite", cryptonightlite);
     NODE_SET_METHOD(exports, "cryptonight-lite", cryptonightlite);
-    NODE_SET_METHOD(exports, "cryptonight-soft-shell", cryptonightsoftshell);
     NODE_SET_METHOD(exports, "fresh", fresh);
     NODE_SET_METHOD(exports, "fugue", fugue);
     NODE_SET_METHOD(exports, "groestl", groestl);

@@ -13,44 +13,6 @@ var xmrigcnlitevariant0hash = new Buffer('28a22bad3f93d1408fca472eb5ad1cbe75f21d
 var xmrigcnlitevariant1hash = new Buffer('87c4e570653eb4c2b42b7a0d546559452dfab573b82ec52f152b7ff98e79446f', 'hex')
 var xmrigcnlitevariant2hash = new Buffer('b7e78fab22eb19cb8c9c3afe034fb53390321511bab6ab4915cd538a630c3c62', 'hex')
 
-var cnsoftshellHashv0 = []
-cnsoftshellHashv0.push(new Buffer('546c3f1badd7c1232c7a3b88cdb013f7f611b7bd3d1d2463540fccbd12997982', 'hex'))
-cnsoftshellHashv0.push(new Buffer('54b7350dd54e73e533ab4012835eec0e2468b01f432822352fd60e9fef70ba4e', 'hex'))
-cnsoftshellHashv0.push(new Buffer('a25c8be1e6b4f2696163a5f6852b6bfdd9eabc442bc8bb992ff8aea89a546f9f', 'hex'))
-cnsoftshellHashv0.push(new Buffer('c8c4b871cefd49fb8bc4ecd77c9687ec148eeed2180d0f80b002a9de1f509c18', 'hex'))
-cnsoftshellHashv0.push(new Buffer('6eae70222ff2121bff32764cb606a6565f10e2fe87a8467ef547d1d271cbfbbd', 'hex'))
-cnsoftshellHashv0.push(new Buffer('c8c4b871cefd49fb8bc4ecd77c9687ec148eeed2180d0f80b002a9de1f509c18', 'hex'))
-cnsoftshellHashv0.push(new Buffer('a25c8be1e6b4f2696163a5f6852b6bfdd9eabc442bc8bb992ff8aea89a546f9f', 'hex'))
-cnsoftshellHashv0.push(new Buffer('54b7350dd54e73e533ab4012835eec0e2468b01f432822352fd60e9fef70ba4e', 'hex'))
-cnsoftshellHashv0.push(new Buffer('546c3f1badd7c1232c7a3b88cdb013f7f611b7bd3d1d2463540fccbd12997982', 'hex'))
-cnsoftshellHashv0.push(new Buffer('54b7350dd54e73e533ab4012835eec0e2468b01f432822352fd60e9fef70ba4e', 'hex'))
-cnsoftshellHashv0.push(new Buffer('a25c8be1e6b4f2696163a5f6852b6bfdd9eabc442bc8bb992ff8aea89a546f9f', 'hex'))
-cnsoftshellHashv0.push(new Buffer('c8c4b871cefd49fb8bc4ecd77c9687ec148eeed2180d0f80b002a9de1f509c18', 'hex'))
-cnsoftshellHashv0.push(new Buffer('6eae70222ff2121bff32764cb606a6565f10e2fe87a8467ef547d1d271cbfbbd', 'hex'))
-cnsoftshellHashv0.push(new Buffer('c8c4b871cefd49fb8bc4ecd77c9687ec148eeed2180d0f80b002a9de1f509c18', 'hex'))
-cnsoftshellHashv0.push(new Buffer('a25c8be1e6b4f2696163a5f6852b6bfdd9eabc442bc8bb992ff8aea89a546f9f', 'hex'))
-cnsoftshellHashv0.push(new Buffer('54b7350dd54e73e533ab4012835eec0e2468b01f432822352fd60e9fef70ba4e', 'hex'))
-cnsoftshellHashv0.push(new Buffer('546c3f1badd7c1232c7a3b88cdb013f7f611b7bd3d1d2463540fccbd12997982', 'hex'))
-
-var cnsoftshellHashv1 = []
-cnsoftshellHashv1.push(new Buffer('29e7831780a0ab930e0fe3b965f30e8a44d9b3f9ad2241d67cfbfea3ed62a64e', 'hex'))
-cnsoftshellHashv1.push(new Buffer('702c3eb285452dbfce53c17da2c0d309769194880e8c3d4f0c5787efcf055f2f', 'hex'))
-cnsoftshellHashv1.push(new Buffer('91f2255c59ecb66fc9fd2ec76c0f385e79fa18d22802c7d426c312af00ebaecf', 'hex'))
-cnsoftshellHashv1.push(new Buffer('c81bd0e073c0a35cb2921c0ddf24fd951808fceff572d459685240dda78939ed', 'hex'))
-cnsoftshellHashv1.push(new Buffer('ebd1c981c4fb1c0085b7ab28ec164afa2290f079ad5dcffd017976a19700590f', 'hex'))
-cnsoftshellHashv1.push(new Buffer('c81bd0e073c0a35cb2921c0ddf24fd951808fceff572d459685240dda78939ed', 'hex'))
-cnsoftshellHashv1.push(new Buffer('91f2255c59ecb66fc9fd2ec76c0f385e79fa18d22802c7d426c312af00ebaecf', 'hex'))
-cnsoftshellHashv1.push(new Buffer('702c3eb285452dbfce53c17da2c0d309769194880e8c3d4f0c5787efcf055f2f', 'hex'))
-cnsoftshellHashv1.push(new Buffer('29e7831780a0ab930e0fe3b965f30e8a44d9b3f9ad2241d67cfbfea3ed62a64e', 'hex'))
-cnsoftshellHashv1.push(new Buffer('702c3eb285452dbfce53c17da2c0d309769194880e8c3d4f0c5787efcf055f2f', 'hex'))
-cnsoftshellHashv1.push(new Buffer('91f2255c59ecb66fc9fd2ec76c0f385e79fa18d22802c7d426c312af00ebaecf', 'hex'))
-cnsoftshellHashv1.push(new Buffer('c81bd0e073c0a35cb2921c0ddf24fd951808fceff572d459685240dda78939ed', 'hex'))
-cnsoftshellHashv1.push(new Buffer('ebd1c981c4fb1c0085b7ab28ec164afa2290f079ad5dcffd017976a19700590f', 'hex'))
-cnsoftshellHashv1.push(new Buffer('c81bd0e073c0a35cb2921c0ddf24fd951808fceff572d459685240dda78939ed', 'hex'))
-cnsoftshellHashv1.push(new Buffer('91f2255c59ecb66fc9fd2ec76c0f385e79fa18d22802c7d426c312af00ebaecf', 'hex'))
-cnsoftshellHashv1.push(new Buffer('702c3eb285452dbfce53c17da2c0d309769194880e8c3d4f0c5787efcf055f2f', 'hex'))
-cnsoftshellHashv1.push(new Buffer('29e7831780a0ab930e0fe3b965f30e8a44d9b3f9ad2241d67cfbfea3ed62a64e', 'hex'))
-
 var fastHashData = multiHashing['cryptonight'](xmrigdata, true)
 var cnvariant0Data = multiHashing['cryptonight'](xmrigdata)
 var cnvariant1Data = multiHashing['cryptonight'](xmrigdata, 1)
@@ -59,53 +21,16 @@ var cnlitevariant0Data = multiHashing['cryptonight-lite'](xmrigdata, 0)
 var cnlitevariant1Data = multiHashing['cryptonight-lite'](xmrigdata, 1)
 var cnlitevariant2Data = multiHashing['cryptonight-lite'](xmrigdata, 2)
 
-// Easy fill soft shell data
-var cnsoftshellDatav0 = []
-for (var i = 0; i <= 8192; i += 512) {
-  cnsoftshellDatav0.push({height: i, hash: multiHashing['cryptonight-soft-shell'](xmrigdata, 0, i)})
-}
-
-// Easy fill soft shell data
-var cnsoftshellDatav1 = []
-for (i = 0; i <= 8192; i += 512) {
-  cnsoftshellDatav1.push({height: i, hash: multiHashing['cryptonight-soft-shell'](xmrigdata, 1, i)})
-}
-
-// Easy fill soft shell data
-var cnsoftshellDatav2 = []
-for (i = 0; i <= 8192; i += 512) {
-  cnsoftshellDatav2.push({height: i, hash: multiHashing['cryptonight-soft-shell'](xmrigdata, 2, i)})
-}
-
 console.log('')
 console.log('[#1] Cryptonight Fast Hash: ', fastHashData.toString('hex'))
+console.log('')
 console.log('[#2] Cryptonight v0: ', cnvariant0Data.toString('hex'))
 console.log('[#3] Cryptonight v1: ', cnvariant1Data.toString('hex'))
 console.log('[#4] Cryptonight v2: ', cnvariant2Data.toString('hex'))
+console.log('')
 console.log('[#5] Cryptonight Lite v0: ', cnlitevariant0Data.toString('hex'))
 console.log('[#6] Cryptonight Lite v1: ', cnlitevariant1Data.toString('hex'))
 console.log('[#7] Cryptonight Lite v2: ', cnlitevariant2Data.toString('hex'))
-
-// Spit out soft shell hashes
-var count = 8
-console.log('')
-
-for (i = 0; i < cnsoftshellDatav0.length; i++) {
-  console.log('[#' + count + '] Cryptonight Soft Shell v0 (' + cnsoftshellDatav0[i].height + '): ', cnsoftshellDatav0[i].hash.toString('hex'))
-  count++
-}
-
-console.log('')
-for (i = 0; i < cnsoftshellDatav1.length; i++) {
-  console.log('[#' + count + '] Cryptonight Soft Shell v1 (' + cnsoftshellDatav1[i].height + '): ', cnsoftshellDatav1[i].hash.toString('hex'))
-  count++
-}
-
-console.log('')
-for (i = 0; i < cnsoftshellDatav2.length; i++) {
-  console.log('[#' + count + '] Cryptonight Soft Shell v1 (' + cnsoftshellDatav2[i].height + '): ', cnsoftshellDatav2[i].hash.toString('hex'))
-  count++
-}
 
 assert.deepEqual(fastHashData, cnfasthash)
 assert.deepEqual(cnvariant0Data, xmrigcnvariant0hash)
@@ -115,13 +40,3 @@ assert.deepEqual(cnvariant2Data, xmrigcnvariant2hash)
 assert.deepEqual(cnlitevariant0Data, xmrigcnlitevariant0hash)
 assert.deepEqual(cnlitevariant1Data, xmrigcnlitevariant1hash)
 assert.deepEqual(cnlitevariant2Data, xmrigcnlitevariant2hash)
-
-/*
-for (i = 0; i < cnsoftshellDatav0.length; i++) {
-  assert.deepEqual(cnsoftshellDatav0[i].hash, cnsoftshellHashv0[i])
-}
-
-for (i = 0; i < cnsoftshellDatav1.length; i++) {
-  assert.deepEqual(cnsoftshellDatav1[i].hash, cnsoftshellHashv1[i])
-}
-*/
