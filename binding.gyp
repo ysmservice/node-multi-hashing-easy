@@ -12,6 +12,7 @@
                 "cryptonight_fast.c",
                 "cryptonight_lite.c",
                 "cryptonight_turtle.c",
+                "cryptonight_soft_shell.c",
                 "fresh.c",
                 "fugue.c",
                 "groestl.c",
