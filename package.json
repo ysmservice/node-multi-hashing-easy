@@ -1,6 +1,6 @@
 {
     "name": "turtlecoin-multi-hashing",
-    "version": "0.0.15",
+    "version": "0.0.16",
     "main": "multihashing",
     "gypfile": true,
     "author": {
