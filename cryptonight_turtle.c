@@ -20,15 +20,15 @@
 #include <malloc.h>
 #endif
 
-#define MEMORY          1048576 /* 512KB - 2^19 */
+#define MEMORY          524288 /* 512KB - 2^19 */
 #define ITER            262144 /* 2^18 */
 #define ITER_DIV        131072 /* 2^17 */
 #define AES_BLOCK_SIZE  16
 #define AES_KEY_SIZE    32 /*16*/
 #define INIT_SIZE_BLK   8
 #define INIT_SIZE_BYTE  (INIT_SIZE_BLK * AES_BLOCK_SIZE)
-#define CN_INIT         (MEMORY / INIT_SIZE_BYTE) / 2
-#define CN_AES_INIT     (MEMORY / AES_BLOCK_SIZE)
+#define CN_INIT         (MEMORY / INIT_SIZE_BYTE)
+#define CN_AES_INIT     (MEMORY / AES_BLOCK_SIZE) / 2
 
 #define VARIANT1_1(p) \
   do if (variant == 1) \

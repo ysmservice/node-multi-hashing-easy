@@ -13,9 +13,9 @@ var xmrigcnlitevariant0hash = new Buffer('28a22bad3f93d1408fca472eb5ad1cbe75f21d
 var xmrigcnlitevariant1hash = new Buffer('87c4e570653eb4c2b42b7a0d546559452dfab573b82ec52f152b7ff98e79446f', 'hex')
 var xmrigcnlitevariant2hash = new Buffer('b7e78fab22eb19cb8c9c3afe034fb53390321511bab6ab4915cd538a630c3c62', 'hex')
 
-var xmrigcnturtlevariant0hash = new Buffer('102771dd318a6bf07b0219f37af8a102244c710fd36021d363a8a0624a06759c', 'hex')
-var xmrigcnturtlevariant1hash = new Buffer('e3e606a2a9b2e45581e873acbd799d33ae88f7011d2e30e5d8b8c45e2860dee7', 'hex')
-var xmrigcnturtlevariant2hash = new Buffer('276a8ff5626b10f16c7b050bb93b20fcb357a23fd598a5e442773b2d1696c941', 'hex')
+var xmrigcnturtlevariant0hash = new Buffer('faa7884d9c08126eb164814aeba6547b5d6064277a09fb6b414f5dbc9d01eb2b', 'hex')
+var xmrigcnturtlevariant1hash = new Buffer('c75c010780fffd9d5e99838eb093b37c0dd015101c9d298217866daa2993d277', 'hex')
+var xmrigcnturtlevariant2hash = new Buffer('fdceb794c1055977a955f31c576a8be528a0356ee1b0a1f9b7f09e20185cda28', 'hex')
 
 var fastHashData = multiHashing['cryptonight'](xmrigdata, true)
 var cnvariant0Data = multiHashing['cryptonight'](xmrigdata)
