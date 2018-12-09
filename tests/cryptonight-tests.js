@@ -114,11 +114,16 @@ for (i = 0; i < cnsoftshellDatav1.length; i++) {
   count++
 }
 
+/* We cannot currently generate a valid Soft Shell v2 hash at this time
+   that issue will be rectified soon */
+
+/*
 console.log('')
 for (i = 0; i < cnsoftshellDatav2.length; i++) {
   console.log('[#' + count + '] Cryptonight Soft Shell v2 (' + cnsoftshellDatav2[i].height + '): ', cnsoftshellDatav2[i].hash.toString('hex'))
   count++
 }
+*/
 
 assert.deepEqual(fastHashData, cnfasthash)
 assert.deepEqual(cnvariant0Data, xmrigcnvariant0hash)
