@@ -3,19 +3,6 @@
 #include <v8.h>
 #include <stdint.h>
 
-// CryptoNight Soft Shell Definitions
-#define CN_SOFT_SHELL_MEMORY            262144 // 256K scratchpad 2^18
-#define CN_SOFT_SHELL_ITER              131072 // 2^17
-#define CN_SOFT_SHELL_WINDOW            2048 // This defines how many blocks we cycle through as part of our algo sine wave
-#define CN_SOFT_SHELL_MULTIPLIER        3 // This defines how big our steps are for each block and
-                                          // ultimately determines how big our sine wave is. A smaller value means a bigger wave
-#define CN_SOFT_SHELL_PAD_MULTIPLIER    (CN_SOFT_SHELL_WINDOW / CN_SOFT_SHELL_MULTIPLIER)
-#define CN_SOFT_SHELL_ITER_MULTIPLIER   (CN_SOFT_SHELL_PAD_MULTIPLIER / 2) // This value should always be half of our pad multiplier
-
-#if (((CN_SOFT_SHELL_WINDOW * CN_SOFT_SHELL_PAD_MULTIPLIER) + CN_SOFT_SHELL_MEMORY) > 2097152)
-#error The CryptoNight Soft Shell Parameters you supplied will exceed normal paging operations.
-#endif
-
 extern "C" {
     #include "bcrypt.h"
     #include "blake.h"
@@ -391,6 +378,38 @@ DECLARE_FUNC(cryptonightsoftshell) {
       else
         RETURN_EXCEPT("Argument 3 should be an uint32_t");
     }
+
+    /* Default CN Soft Shell values */
+    uint32_t CN_SOFT_SHELL_MEMORY = 262144;
+    uint32_t CN_SOFT_SHELL_ITER = (CN_SOFT_SHELL_MEMORY / 2);
+    uint32_t CN_SOFT_SHELL_WINDOW = 2048;
+    uint32_t CN_SOFT_SHELL_MULTIPLIER = 3;
+
+    if (args.Length() >= 4) {
+      if (args[3]->IsUint32()) {
+        CN_SOFT_SHELL_MEMORY = args[3]->Uint32Value();
+        CN_SOFT_SHELL_ITER  = (CN_SOFT_SHELL_MEMORY / 2);
+      } else {
+        RETURN_EXCEPT("Argument 4 should be an uint32_t (scratchpad)");
+      }
+    }
+
+    if (args.Length() >= 5) {
+      if (args[4]->IsUint32())
+        CN_SOFT_SHELL_WINDOW = args[4]->Uint32Value();
+      else
+        RETURN_EXCEPT("Argument 6 should be an uint32_t (window)");
+    }
+
+    if (args.Length() >= 6) {
+      if (args[5]->IsUint32())
+        CN_SOFT_SHELL_MULTIPLIER = args[5]->Uint32Value();
+      else
+        RETURN_EXCEPT("Argument 6 should be an uint32_t (multiplier)");
+    }
+
+    uint32_t CN_SOFT_SHELL_PAD_MULTIPLIER = (CN_SOFT_SHELL_WINDOW / CN_SOFT_SHELL_MULTIPLIER);
+    uint32_t CN_SOFT_SHELL_ITER_MULTIPLIER = (CN_SOFT_SHELL_PAD_MULTIPLIER / 2);
 
     Local<Object> target = args[0]->ToObject();
 
