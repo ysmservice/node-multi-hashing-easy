@@ -20,9 +20,9 @@
 #include <malloc.h>
 #endif
 
-#define MEMORY          262144 /* 256KB - 2^18 */
-#define ITER            131072 /* 2^17 */
-#define ITER_DIV        65536 /* 2^16 */
+#define MEMORY          524288 /* 512KB - 2^19 */
+#define ITER            262144 /* 2^18 */
+#define ITER_DIV        131072 /* 2^17 */
 #define AES_BLOCK_SIZE  16
 #define AES_KEY_SIZE    32 /*16*/
 #define INIT_SIZE_BLK   8
@@ -121,26 +121,26 @@ union cn_slow_hash_state {
 };
 #pragma pack(pop)
 
-static void do_turtle_blake_hash(const void* input, size_t len, char* output) {
+static void do_dark_blake_hash(const void* input, size_t len, char* output) {
     blake256_hash((uint8_t*)output, input, len);
 }
 
-void do_turtle_groestl_hash(const void* input, size_t len, char* output) {
+void do_dark_groestl_hash(const void* input, size_t len, char* output) {
     groestl(input, len * 8, (uint8_t*)output);
 }
 
-static void do_turtle_jh_hash(const void* input, size_t len, char* output) {
+static void do_dark_jh_hash(const void* input, size_t len, char* output) {
     int r = jh_hash(HASH_SIZE * 8, input, 8 * len, (uint8_t*)output);
     assert(SUCCESS == r);
 }
 
-static void do_turtle_skein_hash(const void* input, size_t len, char* output) {
+static void do_dark_skein_hash(const void* input, size_t len, char* output) {
     int r = c_skein_hash(8 * HASH_SIZE, input, 8 * len, (uint8_t*)output);
     assert(SKEIN_SUCCESS == r);
 }
 
 static void (* const extra_hashes[4])(const void *, size_t, char *) = {
-    do_turtle_blake_hash, do_turtle_groestl_hash, do_turtle_jh_hash, do_turtle_skein_hash
+    do_dark_blake_hash, do_dark_groestl_hash, do_dark_jh_hash, do_dark_skein_hash
 };
 
 extern int aesb_single_round(const uint8_t *in, uint8_t*out, const uint8_t *expandedKey);
@@ -192,7 +192,7 @@ static inline void xor_blocks_dst(const uint8_t* a, const uint8_t* b, uint8_t* d
     ((uint64_t*) dst)[1] = ((uint64_t*) a)[1] ^ ((uint64_t*) b)[1];
 }
 
-struct cryptonightturtle_ctx {
+struct cryptonightdark_ctx {
     uint8_t long_state[MEMORY];
     union cn_slow_hash_state state;
     uint8_t text[INIT_SIZE_BYTE];
@@ -203,11 +203,11 @@ struct cryptonightturtle_ctx {
     oaes_ctx* aes_ctx;
 };
 
-void cryptonightturtle_hash(const char* input, char* output, uint32_t len, int variant) {
+void cryptonightdark_hash(const char* input, char* output, uint32_t len, int variant) {
 #if defined(_MSC_VER)
-    struct cryptonightturtle_ctx *ctx = _malloca(sizeof(struct cryptonightturtle_ctx));
+    struct cryptonightdark_ctx *ctx = _malloca(sizeof(struct cryptonightdark_ctx));
 #else
-    struct cryptonightturtle_ctx *ctx = alloca(sizeof(struct cryptonightturtle_ctx));
+    struct cryptonightdark_ctx *ctx = alloca(sizeof(struct cryptonightdark_ctx));
 #endif
     hash_process(&ctx->state.hs, (const uint8_t*) input, len);
     memcpy(ctx->text, ctx->state.init, INIT_SIZE_BYTE);
@@ -293,7 +293,7 @@ void cryptonightturtle_hash(const char* input, char* output, uint32_t len, int v
     oaes_free((OAES_CTX **) &ctx->aes_ctx);
 }
 
-void cryptonightturtle_fast_hash(const char* input, char* output, uint32_t len) {
+void cryptonightdark_fast_hash(const char* input, char* output, uint32_t len) {
     union hash_state state;
     hash_process(&state, (const uint8_t*) input, len);
     memcpy(output, &state, HASH_SIZE);
