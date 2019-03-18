@@ -537,6 +537,7 @@ DECLARE_FUNC(cryptonightsoftshell) {
     }
 
     uint32_t scratchpad = CN_SOFT_SHELL_MEMORY + (static_cast<uint32_t>(offset) * CN_SOFT_SHELL_PAD_MULTIPLIER);
+	scratchpad = (static_cast<uint64_t>(scratchpad / 128)) * 128;
     uint32_t iterations = CN_SOFT_SHELL_ITER + (static_cast<uint32_t>(offset) * CN_SOFT_SHELL_ITER_MULTIPLIER);
 
     char * input = Buffer::Data(target);
