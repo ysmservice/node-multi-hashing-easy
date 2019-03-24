@@ -1,6 +1,6 @@
 {
     "name": "turtlecoin-multi-hashing",
-    "version": "0.0.18",
+    "version": "0.0.19",
     "main": "multihashing",
     "gypfile": true,
     "author": {
@@ -16,10 +16,10 @@
         "url": "https://github.com/turtlecoin/node8-multi-hashing.git"
     },
     "scripts": {
-        "test": "node-gyp clean && node-gyp configure && node-gyp build && node tests/cryptonight-tests.js"
+        "test": "node-gyp clean && node-gyp configure && node-gyp build && node tests/cryptonight-tests.js && node tests/argon2-tests.js"
     },
     "dependencies": {
-        "bindings": "^1.3.1",
+        "bindings": "^1.5.0",
         "safe-buffer": "^5.1.2"
     },
     "keywords": [
