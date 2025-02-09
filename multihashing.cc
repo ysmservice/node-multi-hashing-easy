@@ -125,6 +125,11 @@ using namespace v8;
  DECLARE_CALLBACK(x11, x11_hash, 32);
  DECLARE_CALLBACK(x13, x13_hash, 32);
  DECLARE_CALLBACK(x15, x15_hash, 32);
+DECLARE_CALLBACK(xelishash, xelishash_hash, 32);
+DECLARE_CALLBACK(xelishash_v2_dec, xelishash_v2, 32);
+DECLARE_CALLBACK(yescryptR8, yescryptR8_hash, 32);
+DECLARE_CALLBACK(yescryptR16, yescryptR16_hash, 32);
+DECLARE_CALLBACK(yescryptR32, yescryptR32_hash, 32);
 DECLARE_FUNC(scrypt) {
    DECLARE_SCOPE;
    if (args.Length() < 3)
@@ -494,6 +499,55 @@ DECLARE_FUNC(boolberry) {
 
 DECLARE_CALLBACK(meowpow, meowpow_hash, 32);
 
+// Ethereum share submission methods
+DECLARE_FUNC(ethSubmitHash) {
+    DECLARE_SCOPE;
+    
+    if (args.Length() < 3)
+        RETURN_EXCEPT("You must provide header hash, nonce and mix hash");
+        
+    Local<Object> header_hash = args[0]->ToObject();
+    Local<Object> nonce = args[1]->ToObject();
+    Local<Object> mix_hash = args[2]->ToObject();
+    
+    if(!Buffer::HasInstance(header_hash) || !Buffer::HasInstance(nonce) || !Buffer::HasInstance(mix_hash))
+        RETURN_EXCEPT("Arguments should be buffer objects.");
+        
+    char * header_hash_data = Buffer::Data(header_hash);
+    char * nonce_data = Buffer::Data(nonce);
+    char * mix_hash_data = Buffer::Data(mix_hash);
+    
+    char output[32];
+    
+    ethash_submit_hash(header_hash_data, nonce_data, mix_hash_data, output, 0);
+    
+    SET_BUFFER_RETURN(output, 32);
+}
+
+DECLARE_FUNC(ethSubmitWork) {
+    DECLARE_SCOPE;
+    
+    if (args.Length() < 3)
+        RETURN_EXCEPT("You must provide header, nonce and mixhash");
+        
+    Local<Object> header = args[0]->ToObject();
+    Local<Object> nonce = args[1]->ToObject();
+    Local<Object> mixhash = args[2]->ToObject();
+    
+    if(!Buffer::HasInstance(header) || !Buffer::HasInstance(nonce) || !Buffer::HasInstance(mixhash))
+        RETURN_EXCEPT("Arguments should be buffer objects.");
+        
+    char * header_data = Buffer::Data(header);
+    char * nonce_data = Buffer::Data(nonce);
+    char * mixhash_data = Buffer::Data(mixhash);
+    
+    char output[32];
+    
+    ethash_submit_work(header_data, nonce_data, mixhash_data, output, 0);
+    
+    SET_BUFFER_RETURN(output, 32);
+}
+
 DECLARE_INIT(init) {
     NODE_SET_METHOD(exports, "bcrypt", bcrypt);
     NODE_SET_METHOD(exports, "blake", blake);
@@ -536,13 +590,6 @@ DECLARE_INIT(init) {
     NODE_SET_METHOD(exports, "equihash", equihash);
     NODE_SET_METHOD(exports, "yescrypt", yescrypt);
     NODE_SET_METHOD(exports, "yespowerr16", yespowerr16);
-    DECLARE_CALLBACK(xelishash, xelishash_hash, 32);
-    DECLARE_CALLBACK(xelishash_v2, xelishash_v2, 32);
-    DECLARE_CALLBACK(xelishash, xelishash_hash, 32);
-    DECLARE_CALLBACK(xelishash_v2, xelishash_v2, 32);
-    DECLARE_CALLBACK(yescryptR8, yescryptR8_hash, 32);
-    DECLARE_CALLBACK(yescryptR16, yescryptR16_hash, 32);
-    DECLARE_CALLBACK(yescryptR32, yescryptR32_hash, 32);
 
     NODE_SET_METHOD(exports, "xelishash", xelishash);
     NODE_SET_METHOD(exports, "xelishash_v2", xelishash_v2);
@@ -550,6 +597,59 @@ DECLARE_INIT(init) {
     NODE_SET_METHOD(exports, "yescryptR16", yescryptR16);
     NODE_SET_METHOD(exports, "yescryptR32", yescryptR32);
     NODE_SET_METHOD(exports, "meowpow", meowpow);
+    
+    // Register Ethereum methods
+    NODE_SET_METHOD(exports, "ethash_submit_hash", ethSubmitHash);
+    NODE_SET_METHOD(exports, "ethash_submit_work", ethSubmitWork);
+}
+
+// Ethereum hash submission methods
+DECLARE_FUNC(ethSubmitHash) {
+    DECLARE_SCOPE;
+    
+    if (args.Length() < 3)
+        RETURN_EXCEPT("You must provide header hash, nonce and mix hash");
+        
+    Local<Object> header_hash = args[0]->ToObject();
+    Local<Object> nonce = args[1]->ToObject();
+    Local<Object> mix_hash = args[2]->ToObject();
+    
+    if(!Buffer::HasInstance(header_hash) || !Buffer::HasInstance(nonce) || !Buffer::HasInstance(mix_hash))
+        RETURN_EXCEPT("Arguments should be buffer objects.");
+        
+    char * header_hash_data = Buffer::Data(header_hash);
+    char * nonce_data = Buffer::Data(nonce);
+    char * mix_hash_data = Buffer::Data(mix_hash);
+    
+    char output[32];
+    
+    ethash_submit_hash(header_hash_data, nonce_data, mix_hash_data, output, 0);
+    
+    SET_BUFFER_RETURN(output, 32);
+}
+
+DECLARE_FUNC(ethSubmitWork) {
+    DECLARE_SCOPE;
+    
+    if (args.Length() < 3)
+        RETURN_EXCEPT("You must provide header, nonce and mixhash");
+        
+    Local<Object> header = args[0]->ToObject();
+    Local<Object> nonce = args[1]->ToObject();
+    Local<Object> mixhash = args[2]->ToObject();
+    
+    if(!Buffer::HasInstance(header) || !Buffer::HasInstance(nonce) || !Buffer::HasInstance(mixhash))
+        RETURN_EXCEPT("Arguments should be buffer objects.");
+        
+    char * header_data = Buffer::Data(header);
+    char * nonce_data = Buffer::Data(nonce);
+    char * mixhash_data = Buffer::Data(mixhash);
+    
+    char output[32];
+    
+    ethash_submit_work(header_data, nonce_data, mixhash_data, output, 0);
+    
+    SET_BUFFER_RETURN(output, 32);
 }
 
 NODE_MODULE(multihashing, init)
