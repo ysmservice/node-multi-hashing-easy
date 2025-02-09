@@ -89,27 +89,35 @@ using namespace v8;
 #endif // NODE_MAJOR_VERSION
 #define DECLARE_CALLBACK(name, hash, output_len) \
     DECLARE_FUNC(name) { \
-    DECLARE_SCOPE; \
- \
-    if (args.Length() < 1) \
-        RETURN_EXCEPT("You must provide one argument."); \
- \
-    Local<Object> target = args[0]->ToObject(); \
- \
-    if(!Buffer::HasInstance(target)) \
-        RETURN_EXCEPT("Argument should be a buffer object."); \
- \
-    char * input = Buffer::Data(target); \
-    char output[32]; \
- \
-    uint32_t input_len = Buffer::Length(target); \
-    try{    
-        int * epoch_number = args.Length() > 1 ? args[1] : 0; \
-        hash(input, output, input_len, epoch_number); \
-    }catch(const std::exception& e){hash(input, output, input_len);} \
- \
-    SET_BUFFER_RETURN(output, output_len); \
-}
+        DECLARE_SCOPE; \
+\
+        if (args.Length() < 1) \
+            RETURN_EXCEPT("You must provide one argument."); \
+\
+        Local<Object> target = args[0]->ToObject(); \
+\
+        if(!Buffer::HasInstance(target)) \
+            RETURN_EXCEPT("Argument should be a buffer object."); \
+\
+        char * input = Buffer::Data(target); \
+        char output[32]; \
+\
+        uint32_t input_len = Buffer::Length(target); \
+        int* epoch_number = new int(0); \
+
+        if (args.Length() > 1 && args[1]->IsNumber()) { \
+            *epoch_number = args[1]->Uint32Value(); \
+        } \
+\
+        try { \
+            hash(input, output, input_len, epoch_number); \
+        } catch(const std::exception& e) { \
+            hash(input, output, input_len); \
+        } \
+\
+        SET_BUFFER_RETURN(output, output_len); \
+    }
+
  DECLARE_CALLBACK(bcrypt, bcrypt_hash, 32);
  DECLARE_CALLBACK(blake, blake_hash, 32);
  DECLARE_CALLBACK(c11, c11_hash, 32);
