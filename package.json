@@ -22,7 +22,6 @@
     "dependencies": {
         "bindings": "^1.5.0",
         "safe-buffer": "^5.1.2",
-        "equihash-js": "^1.0.0",
         "yescrypt": "^0.1.0",
         "ethash": "^1.0.0",
         "nan": "^2.14.2"
