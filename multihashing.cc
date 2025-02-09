@@ -536,6 +536,14 @@ DECLARE_INIT(init) {
     NODE_SET_METHOD(exports, "equihash", equihash);
     NODE_SET_METHOD(exports, "yescrypt", yescrypt);
     NODE_SET_METHOD(exports, "yespowerr16", yespowerr16);
+    DECLARE_CALLBACK(xelishash, xelishash_hash, 32);
+    DECLARE_CALLBACK(xelishash_v2, xelishash_v2, 32);
+    DECLARE_CALLBACK(xelishash, xelishash_hash, 32);
+    DECLARE_CALLBACK(xelishash_v2, xelishash_v2, 32);
+    DECLARE_CALLBACK(yescryptR8, yescryptR8_hash, 32);
+    DECLARE_CALLBACK(yescryptR16, yescryptR16_hash, 32);
+    DECLARE_CALLBACK(yescryptR32, yescryptR32_hash, 32);
+
     NODE_SET_METHOD(exports, "xelishash", xelishash);
     NODE_SET_METHOD(exports, "xelishash_v2", xelishash_v2);
     NODE_SET_METHOD(exports, "yescryptR8", yescryptR8);
