@@ -590,12 +590,50 @@ DECLARE_INIT(init) {
     NODE_SET_METHOD(exports, "x11", x11);
     NODE_SET_METHOD(exports, "x13", x13);
     NODE_SET_METHOD(exports, "x15", x15);
-    NODE_SET_METHOD(exports, "equihash", equihash_hash);
-    NODE_SET_METHOD(exports, "yescrypt", yescryptR8_hash);
-    NODE_SET_METHOD(exports, "yespowerr16", yespowerR16_hash);
+DECLARE_FUNC(equihash_wrapper) {
+    DECLARE_SCOPE;
 
-    NODE_SET_METHOD(exports, "xelishash", xelishash_hash);
-    NODE_SET_METHOD(exports, "xelishash_v2", xelishash_v2_dec);
+    if (args.Length() < 1)
+        RETURN_EXCEPT("You must provide one argument.");
+
+    Local<Object> target = args[0]->ToObject();
+
+    if(!Buffer::HasInstance(target))
+        RETURN_EXCEPT("Argument should be a buffer object.");
+
+    char * input = Buffer::Data(target);
+    char output[32];
+    uint32_t input_len = Buffer::Length(target);
+
+    // デフォルトのEquihashパラメータを設定
+    EquihashParams params;
+    params.N = args.Length() > 1 ? args[1]->Int32Value() : 200;
+    params.K = args.Length() > 2 ? args[2]->Int32Value() : 9;
+    
+    // personalizationパラメータの処理
+    const char* default_pers = "ZcashPoW";
+    if (args.Length() > 3 && args[3]->IsString()) {
+        v8::String::Utf8Value pers(args[3]);
+        params.personalization = *pers;
+    } else {
+        params.personalization = default_pers;
+    }
+
+    equihash_hash(input, output, input_len, &params);
+
+    SET_BUFFER_RETURN(output, 32);
+}
+
+    DECLARE_CALLBACK(yescrypt_wrapper, yescryptR8_hash, 32);
+    DECLARE_CALLBACK(yespowerr16_wrapper, yespowerR16_hash, 32);
+    DECLARE_CALLBACK(xelishash_wrapper, xelishash_hash, 32);
+    DECLARE_CALLBACK(xelishash_v2_wrapper, xelishash_v2_dec, 32);
+
+    NODE_SET_METHOD(exports, "equihash", equihash_wrapper);
+    NODE_SET_METHOD(exports, "yescrypt", yescrypt_wrapper);
+    NODE_SET_METHOD(exports, "yespowerr16", yespowerr16_wrapper);
+    NODE_SET_METHOD(exports, "xelishash", xelishash_wrapper);
+    NODE_SET_METHOD(exports, "xelishash_v2", xelishash_v2_wrapper);
     NODE_SET_METHOD(exports, "yescryptR8", yescryptR8);
     NODE_SET_METHOD(exports, "yescryptR16", yescryptR16);
     NODE_SET_METHOD(exports, "yescryptR32", yescryptR32);
