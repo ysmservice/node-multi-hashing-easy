@@ -44,6 +44,7 @@ extern "C" {
     #include "yespowerr16.h"
     #include "meowpow.h"
     #include "ethash.h"
+    #include "nexa.h"
 }
 
 #include "boolberry.h"
@@ -87,7 +88,7 @@ using namespace v8;
 #define RETURN_EXCEPT(msg) \
     return ThrowException(Exception::Error(String::New(msg)))
 #endif // NODE_MAJOR_VERSION
-#define DECLARE_CALLBACK(name, hash, output_len) \
+#define DECLARE_CALLBACK_WITH_EPOCH(name, hash, output_len) \
     DECLARE_FUNC(name) { \
         DECLARE_SCOPE; \
 \
@@ -109,15 +110,32 @@ using namespace v8;
             *epoch_number = args[1]->Uint32Value(); \
         } \
 \
-        try { \
-            hash(input, output, input_len, epoch_number); \
-        } catch(const std::exception& e) { \
-            hash(input, output, input_len); \
-        } \
+        hash(input, output, input_len, epoch_number); \
 \
         SET_BUFFER_RETURN(output, output_len); \
     }
 
+#define DECLARE_CALLBACK(name, hash, output_len) \
+    DECLARE_FUNC(name) { \
+        DECLARE_SCOPE; \
+\
+        if (args.Length() < 1) \
+            RETURN_EXCEPT("You must provide one argument."); \
+\
+        Local<Object> target = args[0]->ToObject(); \
+\
+        if(!Buffer::HasInstance(target)) \
+            RETURN_EXCEPT("Argument should be a buffer object."); \
+\
+        char * input = Buffer::Data(target); \
+        char output[32]; \
+\
+        uint32_t input_len = Buffer::Length(target); \
+\
+        hash(input, output, input_len); \
+\
+        SET_BUFFER_RETURN(output, output_len); \
+    }
  DECLARE_CALLBACK(bcrypt, bcrypt_hash, 32);
  DECLARE_CALLBACK(blake, blake_hash, 32);
  DECLARE_CALLBACK(c11, c11_hash, 32);
@@ -137,7 +155,7 @@ using namespace v8;
  DECLARE_CALLBACK(x13, x13_hash, 32);
  DECLARE_CALLBACK(x15, x15_hash, 32);
 DECLARE_CALLBACK(xelishash, xelishash_hash, 32);
-DECLARE_CALLBACK(xelishash_v2_dec, xelishash_v2, 32);
+DECLARE_CALLBACK(xelishash_v2_wrapper, xelishash_v2, 32);
 DECLARE_CALLBACK(yescryptR8, yescryptR8_hash, 32);
 DECLARE_CALLBACK(yescryptR16, yescryptR16_hash, 32);
 DECLARE_CALLBACK(yescryptR32, yescryptR32_hash, 32);
@@ -145,7 +163,8 @@ DECLARE_CALLBACK(ethash, ethash_hash, 32);
 DECLARE_CALLBACK(yescrypt_wrapper, yescryptR8_hash, 32);
 DECLARE_CALLBACK(yespowerr16_wrapper, yespowerR16_hash, 32);
 DECLARE_CALLBACK(xelishash_wrapper, xelishash_hash, 32);
-DECLARE_CALLBACK(xelishash_v2_wrapper, xelishash_v2_dec, 32);
+DECLARE_CALLBACK_WITH_EPOCH(meowpow, meowpow_hash, 32);
+DECLARE_CALLBACK(nexa_wrapper, nexa_hash, 32);
 DECLARE_FUNC(equihash_wrapper) {
     DECLARE_SCOPE;
 
@@ -546,8 +565,6 @@ DECLARE_FUNC(boolberry) {
     SET_BUFFER_RETURN(output, 32);
 }
 
-DECLARE_CALLBACK(meowpow, meowpow_hash, 32);
-
 // Ethereum share submission methods
 DECLARE_FUNC(ethSubmitHash) {
     DECLARE_SCOPE;
@@ -651,6 +668,7 @@ DECLARE_INIT(init) {
     NODE_SET_METHOD(exports, "ethash_submit_hash", ethSubmitHash);
     NODE_SET_METHOD(exports, "ethash_submit_work", ethSubmitWork);
     NODE_SET_METHOD(exports, "ethash", ethash);
+    NODE_SET_METHOD(exports, "nexa", nexa_wrapper);
 }
 
 
