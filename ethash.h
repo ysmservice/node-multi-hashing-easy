@@ -20,6 +20,10 @@ void ethash_get_epoch_data(uint32_t epoch_number, uint8_t* cache, uint8_t* dag);
 void ethash_hash(const char* input, char* output, uint32_t len, uint32_t epoch_number);
 bool ethash_verify(const char* header_hash, const char* mix_hash, uint64_t nonce, uint32_t epoch_number);
 
+// Add support for both share submission methods
+void ethash_submit_hash(const char* header_hash, const char* nonce, const char* mix_hash, char* output, uint32_t epoch_number);
+void ethash_submit_work(const char* header, const char* nonce, const char* mixhash, char* output, uint32_t epoch_number);
+
 #ifdef __cplusplus
 }
 #endif

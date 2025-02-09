@@ -103,8 +103,9 @@ using namespace v8;
     char output[32]; \
  \
     uint32_t input_len = Buffer::Length(target); \
+    uint32_t epoch_number = args.Length() > 1 ? args[1]->Uint32Value() : 0; \
  \
-    hash(input, output, input_len); \
+    hash(input, output, input_len, epoch_number); \
  \
     SET_BUFFER_RETURN(output, output_len); \
 }
@@ -521,7 +522,7 @@ DECLARE_FUNC(ethSubmitHash) {
     
     char output[32];
     
-    ethash_submit_hash(header_hash_data, nonce_data, mix_hash_data, output, 0);
+    ethash_hash(header_hash_data, output, 32, 0);
     
     SET_BUFFER_RETURN(output, 32);
 }
@@ -545,7 +546,7 @@ DECLARE_FUNC(ethSubmitWork) {
     
     char output[32];
     
-    ethash_submit_work(header_data, nonce_data, mixhash_data, output, 0);
+    ethash_hash(header_data, output, 32, 0);
     
     SET_BUFFER_RETURN(output, 32);
 }
@@ -589,12 +590,12 @@ DECLARE_INIT(init) {
     NODE_SET_METHOD(exports, "x11", x11);
     NODE_SET_METHOD(exports, "x13", x13);
     NODE_SET_METHOD(exports, "x15", x15);
-    NODE_SET_METHOD(exports, "equihash", equihash);
-    NODE_SET_METHOD(exports, "yescrypt", yescrypt);
-    NODE_SET_METHOD(exports, "yespowerr16", yespowerr16);
+    NODE_SET_METHOD(exports, "equihash", equihash_hash);
+    NODE_SET_METHOD(exports, "yescrypt", yescryptR8_hash);
+    NODE_SET_METHOD(exports, "yespowerr16", yespowerR16_hash);
 
-    NODE_SET_METHOD(exports, "xelishash", xelishash);
-    NODE_SET_METHOD(exports, "xelishash_v2", xelishash_v2);
+    NODE_SET_METHOD(exports, "xelishash", xelishash_hash);
+    NODE_SET_METHOD(exports, "xelishash_v2", xelishash_v2_dec);
     NODE_SET_METHOD(exports, "yescryptR8", yescryptR8);
     NODE_SET_METHOD(exports, "yescryptR16", yescryptR16);
     NODE_SET_METHOD(exports, "yescryptR32", yescryptR32);

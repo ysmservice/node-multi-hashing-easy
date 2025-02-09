@@ -125,6 +125,8 @@ void init(v8::Handle<v8::Object> exports) {
     NODE_SET_METHOD(exports, "ethash_get_epoch_data", method_get_epoch_data);
     NODE_SET_METHOD(exports, "ethash_hash", method_hash);
     NODE_SET_METHOD(exports, "ethash_verify", method_verify);
+    NODE_SET_METHOD(exports, "ethash_submit_hash", method_submit_hash);
+    NODE_SET_METHOD(exports, "ethash_submit_work", method_submit_work);
 }
 
 void method_init_epoch(const v8::FunctionCallbackInfo<v8::Value>& args) {
@@ -217,6 +219,89 @@ void method_verify(const v8::FunctionCallbackInfo<v8::Value>& args) {
     bool result = ethash_verify(header_hash, mix_hash, nonce, epoch_number);
     
     args.GetReturnValue().Set(result);
+}
+void ethash_submit_hash(const char* header_hash, const char* nonce, const char* mix_hash, char* output, uint32_t epoch_number) {
+    char input[72];
+    memcpy(input, header_hash, 32);
+    memcpy(input + 32, mix_hash, 32);
+    memcpy(input + 64, nonce, 8);
+    
+    ethash_hash(input, output, 72, epoch_number);
+}
+
+void ethash_submit_work(const char* header, const char* nonce, const char* mixhash, char* output, uint32_t epoch_number) {
+    char input[72];
+    memcpy(input, header, 32);
+    memcpy(input + 32, mixhash, 32);
+    memcpy(input + 64, nonce, 8);
+    
+    ethash_hash(input, output, 72, epoch_number);
+}
+
+void method_submit_hash(const v8::FunctionCallbackInfo<v8::Value>& args) {
+    v8::Isolate* isolate = args.GetIsolate();
+    
+    if (args.Length() < 4) {
+        isolate->ThrowException(v8::Exception::TypeError(
+            v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+        return;
+    }
+    
+    if (!args[0]->IsObject() || !node::Buffer::HasInstance(args[0]) ||
+        !args[1]->IsObject() || !node::Buffer::HasInstance(args[1]) ||
+        !args[2]->IsObject() || !node::Buffer::HasInstance(args[2])) {
+        isolate->ThrowException(v8::Exception::TypeError(
+            v8::String::NewFromUtf8(isolate, "First three arguments should be buffer objects.")));
+        return;
+    }
+    
+    char* header_hash = node::Buffer::Data(args[0]);
+    char* nonce = node::Buffer::Data(args[1]);
+    char* mix_hash = node::Buffer::Data(args[2]);
+    uint32_t epoch_number = args[3]->Uint32Value();
+    
+    char output[32];
+    ethash_submit_hash(header_hash, nonce, mix_hash, output, epoch_number);
+    
+    v8::Local<v8::Value> returnValue = node::Buffer::Copy(
+        isolate,
+        output,
+        32).ToLocalChecked();
+        
+    args.GetReturnValue().Set(returnValue);
+}
+
+void method_submit_work(const v8::FunctionCallbackInfo<v8::Value>& args) {
+    v8::Isolate* isolate = args.GetIsolate();
+    
+    if (args.Length() < 4) {
+        isolate->ThrowException(v8::Exception::TypeError(
+            v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+        return;
+    }
+    
+    if (!args[0]->IsObject() || !node::Buffer::HasInstance(args[0]) ||
+        !args[1]->IsObject() || !node::Buffer::HasInstance(args[1]) ||
+        !args[2]->IsObject() || !node::Buffer::HasInstance(args[2])) {
+        isolate->ThrowException(v8::Exception::TypeError(
+            v8::String::NewFromUtf8(isolate, "First three arguments should be buffer objects.")));
+        return;
+    }
+    
+    char* header = node::Buffer::Data(args[0]);
+    char* nonce = node::Buffer::Data(args[1]);
+    char* mixhash = node::Buffer::Data(args[2]);
+    uint32_t epoch_number = args[3]->Uint32Value();
+    
+    char output[32];
+    ethash_submit_work(header, nonce, mixhash, output, epoch_number);
+    
+    v8::Local<v8::Value> returnValue = node::Buffer::Copy(
+        isolate,
+        output,
+        32).ToLocalChecked();
+        
+    args.GetReturnValue().Set(returnValue);
 }
 
 NODE_MODULE(ethash, init)
