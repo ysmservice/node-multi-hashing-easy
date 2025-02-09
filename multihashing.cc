@@ -104,7 +104,7 @@ using namespace v8;
 \
         uint32_t input_len = Buffer::Length(target); \
         int* epoch_number = new int(0); \
-
+\
         if (args.Length() > 1 && args[1]->IsNumber()) { \
             *epoch_number = args[1]->Uint32Value(); \
         } \
