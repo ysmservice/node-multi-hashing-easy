@@ -7,9 +7,9 @@
 using namespace node;
 using namespace v8;
 
-#include "ethash/lib/ethash/ethash.h"
-#include "ethash/lib/ethash/ethash.hpp"
-#include "ethash/lib/ethash/progpow.hpp"
+#include "meow/ethash/ethash.h"
+#include "meow/ethash/ethash.hpp"
+#include "meow/ethash/progpow.hpp"
 
 void meowpow_hash(const char* input, char* output, uint32_t height, int *retval) {
     using namespace ethash;
