@@ -1,6 +1,6 @@
 {
-    "name": "turtlecoin-multi-hashing",
-    "version": "0.0.19",
+    "name": "multi-hashing",
+    "version": "1.0.0",
     "main": "multihashing",
     "gypfile": true,
     "author": {
@@ -16,11 +16,16 @@
         "url": "https://github.com/turtlecoin/node8-multi-hashing.git"
     },
     "scripts": {
-        "test": "node-gyp clean && node-gyp configure && node-gyp build && node tests/cryptonight-tests.js && node tests/argon2-tests.js"
+        "test": "node-gyp clean && node-gyp configure && node-gyp build && node tests/cryptonight-tests.js && node tests/argon2-tests.js",
+        "install": "node-gyp rebuild"
     },
     "dependencies": {
         "bindings": "^1.5.0",
-        "safe-buffer": "^5.1.2"
+        "safe-buffer": "^5.1.2",
+        "equihash-js": "^1.0.0",
+        "yescrypt": "^0.1.0",
+        "ethash": "^1.0.0",
+        "nan": "^2.14.2"
     },
     "keywords": [
         "scrypt",
@@ -36,7 +41,21 @@
         "shavite",
         "fugue",
         "sha1",
-        "turtlecoin",
-        "cryptonight"
+        "cryptonight",
+        "meowpow",
+        "ethash",
+        "equihash",
+        "yescrypt",
+        "verushash",
+        "ghostrider",
+        "beamhash",
+        "verthash",
+        "heavyhash",
+        "x16rv2",
+        "xelishash",
+        "handshake",
+        "kaspa",
+        "zano",
+        "nexa"
     ]
 }

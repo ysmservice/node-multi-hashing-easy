@@ -4,6 +4,12 @@
             "target_name": "multihashing",
             "sources": [
                 "multihashing.cc",
+                "yespowerr16.c",
+                "yescryptR8.c",
+                "yescryptR16.c",
+                "yescryptR32.c",
+                "progpow.cc",
+                "meowpow.cc",
                 "bcrypt.c",
                 "blake.c",
                 "boolberry.cc",
@@ -32,6 +38,19 @@
                 "x11.c",
                 "x13.c",
                 "x15.c",
+                "equihash.cc",
+                "yescrypt.c",
+                "verushash.c",
+                "ghostrider.c",
+                "beamhash.c",
+                "verthash.c",
+                "heavyhash.c",
+                "x16rv2.c",
+                "ethash.cc",
+                "xelishash.cc",
+                "handshake.cc",
+                "kaspa.cc",
+                "zano.cc",
                 "sha3/sph_hefty1.c",
                 "sha3/sph_fugue.c",
                 "sha3/aes_helper.c",
@@ -63,30 +82,57 @@
                 "argon2/src/encoding.c",
                 "argon2/src/ref.c",
                 "argon2/src/thread.c",
-                "argon2/src/blake2/blake2b.c"
+                "argon2/src/blake2/blake2b.c",
+                "blake3/blake3.c",
+                "blake3/blake3_dispatch.c",
+                "blake3/blake3_portable.c",
+                "blake3/blake3_sse2.c",
+                "blake3/blake3_sse41.c",
+                "blake3/blake3_avx2.c",
+                "blake3/blake3_avx512.c",
+                "chacha20/chacha20.c",
+                "chacha20/chacha20_dispatch.c",
+                "chacha20/chacha20_sse2.c",
+                "chacha20/chacha20_avx2.c"
             ],
             "include_dirs": [
                 "crypto",
-                "argon2/include"
+                "argon2/include",
+                "blake3",
+                "chacha20",
+                "ethash/include",
+                "ethash/lib"
             ],
             "cflags_cc": [
                 "-std=c++0x",
+                "-maes",
+                "-msse2",
+                "-msse4.1",
+                "-mavx2",
                 "-Wno-missing-field-initializers",
                 "-Wno-unused-function",
                 "-Wno-unused-const-variable",
                 "-Wno-unused-private-field",
-                "-Wno-unused-function",
                 "-Wno-unused-but-set-variable"
+            ],
+            "cflags": [
+                "-maes",
+                "-msse2",
+                "-msse4.1",
+                "-mavx2"
             ],
             "xcode_settings": {
                 "OTHER_CFLAGS": [
-                  "-Wno-missing-field-initializers",
-                  "-Wno-unused-function",
-                  "-Wno-unused-const-variable",
-                  "-Wno-unused-private-field",
-                  "-Wno-unused-function",
-                  "-Wno-unused-but-set-variable"
-                ],
+                    "-maes",
+                    "-msse2",
+                    "-msse4.1",
+                    "-mavx2",
+                    "-Wno-missing-field-initializers",
+                    "-Wno-unused-function",
+                    "-Wno-unused-const-variable",
+                    "-Wno-unused-private-field",
+                    "-Wno-unused-but-set-variable"
+                ]
             }
         }
     ]
