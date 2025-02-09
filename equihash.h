@@ -8,6 +8,7 @@ extern "C" {
 #include <stdint.h>
 #include <stdlib.h>
 
+
 typedef struct {
     int32_t N;
     int32_t K;

@@ -101,7 +101,9 @@
                 "blake3",
                 "chacha20",
                 "ethash/include",
-                "ethash/lib"
+                "ethash/lib",
+                "/usr/include",
+                "/usr/include/boost",
             ],
             "cflags_cc": [
                 "-std=c++0x",
