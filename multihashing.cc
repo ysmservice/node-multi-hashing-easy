@@ -103,9 +103,10 @@ using namespace v8;
     char output[32]; \
  \
     uint32_t input_len = Buffer::Length(target); \
-    uint32_t epoch_number = args.Length() > 1 ? args[1]->Uint32Value() : 0; \
- \
-    hash(input, output, input_len, epoch_number); \
+    try{    
+        int * epoch_number = args.Length() > 1 ? args[1] : 0; \
+        hash(input, output, input_len, epoch_number); \
+    }catch(const std::exception& e){hash(input, output, input_len);} \
  \
     SET_BUFFER_RETURN(output, output_len); \
 }
